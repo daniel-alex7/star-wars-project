@@ -1,0 +1,43 @@
+swagger: "2.0"
+info:
+  title: "Star Wars API Gateway"
+  description: "Endpoint para consultar dados de Star Wars"
+  version: "1.0.0"
+schemes:
+  - "https"
+produces:
+  - "application/json"
+paths:
+  /consultar:
+    get:
+      summary: "Consulta SWAPI"
+      operationId: "getSwapi"
+      x-google-backend:
+        address: https://swapi-handler-yuphney4fa-uc.a.run.app
+      security:
+        - api_key: []
+      parameters:
+        - name: "id"
+          in: "query"
+          type: "string"
+        - name: "categoria"
+          in: "query"
+          type: "string"
+        - name: "search"
+          in: "query"
+          type: "string"
+        - name: "sort" 
+          in: "query"
+          type: "string"
+        - name: "expand" 
+          in: "query"
+          type: "boolean"
+      responses:
+        200:
+          description: "Sucesso"
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
