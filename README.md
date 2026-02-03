@@ -1,7 +1,8 @@
-🚀 Star Wars Advanced API Gateway (v9.0)
+# Star Wars Advanced API Gateway (v9.0)
+
 Este projeto implementa um orquestrador de dados para a API do Star Wars (SWAPI) utilizando uma arquitetura Serverless no Google Cloud Platform (GCP). A solução vai além do simples repasse de dados, oferecendo uma interface inteligente, métricas de performance e segurança avançada.
 
-🏗️ Desenho de Arquitetura Técnica
+# Desenho de Arquitetura Técnica
 A arquitetura foi desenhada para ser escalável, segura e de baixa latência.
 
 Snippet de código
@@ -29,14 +30,15 @@ graph LR
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#ccf,stroke:#333,stroke-width:2px
     style D fill:#eee,stroke:#333,stroke-dasharray: 5 5
-Componentes Principais:
+
+# Componentes Principais:
 Google API Gateway: Atua como o único ponto de entrada, gerenciando autenticação e ocultando a infraestrutura backend.
 
 Cloud Function Gen2 (Python 3.10): Motor de processamento que aplica regras de negócio e transforma dados brutos em informação estruturada.
 
 SWAPI: Fonte de dados externa integrada via requisições assíncronas/HTTP.
 
-🛠️ Regras de Negócio Aplicadas
+# Regras de Negócio Aplicadas
 Diferente de APIs convencionais, este projeto implementa camadas lógicas que agregam valor ao usuário final:
 
 Padronização HATEOAS: O JSON retornado contém uma seção ui_navigation que dita as próximas ações possíveis, permitindo que a API seja auto-descritiva.
@@ -47,7 +49,7 @@ Monitoramento de SLA: O campo metadata.execution_time rastreia a latência do ba
 
 Abstração de Erros: IDs inexistentes ou falhas na fonte externa são tratados para retornar mensagens amigáveis em vez de erros de sistema (HTTP 500).
 
-🔒 Segurança e Autenticação
+Segurança e Autenticação
 A segurança é implementada de forma multicamada:
 
 Autenticação: Exigência de API Key via Query Parameter.
@@ -56,7 +58,8 @@ Autorização: Configurada no nível do API Gateway via especificação OpenAPI 
 
 Isolamento: A Cloud Function está configurada para aceitar tráfego apenas através do Gateway, evitando exposição direta.
 
-🧪 Testes Unitários
+# Testes Unitários
+
 Para garantir a confiabilidade, o projeto conta com testes unitários que validam:
 
 A correta estruturação do JSON.
@@ -68,9 +71,10 @@ O comportamento da API sob falta de parâmetros.
 Como rodar os testes:
 
 Bash
-pip install pytest
-pytest test_main.py
-📊 Exemplo de Resposta (v9.0)
+**pip install pytest**
+**pytest test_main.py**
+
+Exemplo de Resposta (v9.0)
 JSON
 {
   "api_version": "v9.0-advanced",
@@ -92,11 +96,20 @@ JSON
     ]
   }
 }
-🚀 Como Replicar este Projeto
-Deploy da Cloud Function: gcloud functions deploy swapi-handler --gen2 --runtime=python310 --trigger-http
 
-Configuração do Gateway: gcloud api-gateway api-configs create config-v9 --openapi-spec=openapi2-functions.yaml
+# Como Replicar este Projeto
 
-Update do Gateway: gcloud api-gateway gateways update swapi-gateway --api-config=config-v9
+Deploy da Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --trigger-http**
+
+Atualizar a Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --region=us-central1 --source=**
+
+Configuração do Gateway: **gcloud api-gateway api-configs create config-v9 --openapi-spec=openapi2-functions.yaml**
+
+Update do Gateway: **gcloud api-gateway gateways update swapi-gateway --api-config=config-v9**
+
+Atualizar o API Gateway (Nova Versão): 
+**gcloud api-gateway api-configs create swapi-config-v9 --api=swapi-api --openapi-spec=openapi2-functions.yaml --project=star-wars-api-gateway-lab**
+**gcloud api-gateway gateways update swapi-gateway --api=swapi-api --api-config=swapi-config-v9 --location=us-central1**
+
 
 Desenvolvido por Daniel Silva. Tecnologias: Google Cloud, Python, REST, HATEOAS.
