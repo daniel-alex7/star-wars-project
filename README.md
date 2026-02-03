@@ -41,22 +41,22 @@ SWAPI: Fonte de dados externa integrada via requisições assíncronas/HTTP.
 # Regras de Negócio Aplicadas
 Diferente de APIs convencionais, este projeto implementa camadas lógicas que agregam valor ao usuário final:
 
-Padronização HATEOAS: O JSON retornado contém uma seção ui_navigation que dita as próximas ações possíveis, permitindo que a API seja auto-descritiva.
+**Padronização HATEOAS:** O JSON retornado contém uma seção ui_navigation que dita as próximas ações possíveis, permitindo que a API seja auto-descritiva.
 
-Versionamento por Contrato: Cada resposta inclui api_version para garantir compatibilidade com frontends legados.
+**Versionamento por Contrato:** Cada resposta inclui api_version para garantir compatibilidade com frontends legados.
 
-Monitoramento de SLA: O campo metadata.execution_time rastreia a latência do backend, permitindo auditoria de performance.
+**Monitoramento de SLA:** O campo metadata.execution_time rastreia a latência do backend, permitindo auditoria de performance.
 
-Abstração de Erros: IDs inexistentes ou falhas na fonte externa são tratados para retornar mensagens amigáveis em vez de erros de sistema (HTTP 500).
+**Abstração de Erros:** IDs inexistentes ou falhas na fonte externa são tratados para retornar mensagens amigáveis em vez de erros de sistema (HTTP 500).
 
-Segurança e Autenticação
+# Segurança e Autenticação
 A segurança é implementada de forma multicamada:
 
-Autenticação: Exigência de API Key via Query Parameter.
+**Autenticação:** Exigência de API Key via Query Parameter.
 
-Autorização: Configurada no nível do API Gateway via especificação OpenAPI 2.0 (Swagger).
+**Autorização:** Configurada no nível do API Gateway via especificação OpenAPI 2.0 (Swagger).
 
-Isolamento: A Cloud Function está configurada para aceitar tráfego apenas através do Gateway, evitando exposição direta.
+**Isolamento:** A Cloud Function está configurada para aceitar tráfego apenas através do Gateway, evitando exposição direta.
 
 # Testes Unitários
 
@@ -71,8 +71,10 @@ O comportamento da API sob falta de parâmetros.
 Como rodar os testes:
 
 Bash
+_______________________
 **pip install pytest**
-**pytest test_main.py**
+_______________________
+**pytest tests/test_main.py**
 
 Exemplo de Resposta (v9.0)
 JSON
@@ -100,16 +102,17 @@ JSON
 # Como Replicar este Projeto
 
 Deploy da Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --trigger-http**
-
+____________________________________________________________________
 Atualizar a Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --region=us-central1 --source=**
-
-Configuração do Gateway: **gcloud api-gateway api-configs create config-v9 --openapi-spec=openapi2-functions.yaml**
-
+____________________________________________________________________
+Configuração do Gateway: **gcloud api-gateway api-configs create config-v9 --openapi-spec=config/openapi2-functions.yaml**
+____________________________________________________________________
 Update do Gateway: **gcloud api-gateway gateways update swapi-gateway --api-config=config-v9**
-
+____________________________________________________________________
 Atualizar o API Gateway (Nova Versão): 
-**gcloud api-gateway api-configs create swapi-config-v9 --api=swapi-api --openapi-spec=openapi2-functions.yaml --project=star-wars-api-gateway-lab**
+**gcloud api-gateway api-configs create swapi-config-v9 --api=swapi-api --openapi-spec=config/openapi2-functions.yaml --project=star-wars-api-gateway-lab**
+____________________________________________________________________
 **gcloud api-gateway gateways update swapi-gateway --api=swapi-api --api-config=swapi-config-v9 --location=us-central1**
-
+____________________________________________________________________
 
 Desenvolvido por Daniel Silva. Tecnologias: Google Cloud, Python, REST, HATEOAS.
