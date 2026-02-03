@@ -6,6 +6,7 @@ Este projeto implementa um orquestrador de dados para a API do Star Wars (SWAPI)
 A arquitetura foi desenhada para ser escalável, segura e de baixa latência.
 
 Snippet de código
+<pre>
 graph LR
     subgraph Client_Side [Lado do Cliente]
         A[Navegador / Postman / App]
@@ -30,6 +31,7 @@ graph LR
     style B fill:#f9f,stroke:#333,stroke-width:2px
     style C fill:#ccf,stroke:#333,stroke-width:2px
     style D fill:#eee,stroke:#333,stroke-dasharray: 5 5
+</pre>
 
 # Componentes Principais:
 Google API Gateway: Atua como o único ponto de entrada, gerenciando autenticação e ocultando a infraestrutura backend.
@@ -70,49 +72,49 @@ O comportamento da API sob falta de parâmetros.
 
 Como rodar os testes:
 
-Bash
-_______________________
-**pip install pytest**
-_______________________
-**pytest tests/test_main.py**
+Bash<pre>**pip install pytest**</pre><pre>**python -m pytest tests/test_main.py**</pre>
+
+<pre>
 
 Exemplo de Resposta (v9.0)
 JSON
 {
-  "api_version": "v9.0-advanced",
-  "metadata": {
-    "execution_time": "0.799s",
-    "total_results": 82
+  &quot;api_version&quot;: &quot;v9.0-advanced&quot;,
+  &quot;metadata&quot;: {
+    &quot;execution_time&quot;: &quot;0.799s&quot;,
+    &quot;total_results&quot;: 82
   },
-  "payload": {
-    "name": "Luke Skywalker",
-    "height": "172",
-    "mass": "77"
+  &quot;payload&quot;: {
+    &quot;name&quot;: &quot;Luke Skywalker&quot;,
+    &quot;height&quot;: &quot;172&quot;,
+    &quot;mass&quot;: &quot;77&quot;
   },
-  "ui_navigation": {
-    "available_actions": [
-      { "rel": "list_all", "method": "GET", "href": "https://.../consultar?key=..." }
+  &quot;ui_navigation&quot;: {
+    &quot;available_actions&quot;: [
+      { 
+        &quot;rel&quot;: &quot;list_all&quot;, 
+        &quot;method&quot;: &quot;GET&quot;, 
+        &quot;href&quot;: &quot;https://.../consultar?key=...&quot; 
+      }
     ],
-    "quick_explore": [
-      "https://.../consultar?key=...&categoria=planets"
+    &quot;quick_explore&quot;: [
+      &quot;https://.../consultar?key=...&amp;categoria=planets&quot;
     ]
   }
 }
+</pre>
 
 # Como Replicar este Projeto
 
-Deploy da Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --trigger-http**
+Deploy da Cloud Function: <pre>**gcloud functions deploy swapi-handler --gen2 --runtime=python310 --trigger-http**</pre>
 ____________________________________________________________________
-Atualizar a Cloud Function: **gcloud functions deploy swapi-handler --gen2 --runtime=python310 --region=us-central1 --source=**
+Atualizar a Cloud Function: <pre>**gcloud functions deploy swapi-handler --gen2 --runtime=python310 --region=us-central1 --source=**</pre>
 ____________________________________________________________________
-Configuração do Gateway: **gcloud api-gateway api-configs create config-v9 --openapi-spec=config/openapi2-functions.yaml**
+Configuração do Gateway: <pre>**gcloud api-gateway api-configs create config-v9 --openapi-spec=config/openapi2-functions.yaml**</pre>
 ____________________________________________________________________
-Update do Gateway: **gcloud api-gateway gateways update swapi-gateway --api-config=config-v9**
+Update do Gateway: <pre>**gcloud api-gateway gateways update swapi-gateway --api-config=config-v9**</pre>
 ____________________________________________________________________
-Atualizar o API Gateway (Nova Versão): 
-**gcloud api-gateway api-configs create swapi-config-v9 --api=swapi-api --openapi-spec=config/openapi2-functions.yaml --project=star-wars-api-gateway-lab**
-____________________________________________________________________
-**gcloud api-gateway gateways update swapi-gateway --api=swapi-api --api-config=swapi-config-v9 --location=us-central1**
+Atualizar o API Gateway (Nova Versão): <pre>**gcloud api-gateway api-configs create swapi-config-v9 --api=swapi-api --openapi-spec=config/openapi2-functions.yaml --project=star-wars-api-gateway-lab**</pre><pre>**gcloud api-gateway gateways update swapi-gateway --api=swapi-api --api-config=swapi-config-v9 --location=us-central1**</pre>
 ____________________________________________________________________
 
 Desenvolvido por Daniel Silva. Tecnologias: Google Cloud, Python, REST, HATEOAS.
