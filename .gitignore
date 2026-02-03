@@ -1,0 +1,10 @@
+# Ignorar arquivos de cache do Python
+__pycache__/
+*.py[cod]
+
+# Ignorar ambiente virtual
+venv/
+.env
+
+# Se você salvou a chave de API em algum arquivo de texto, adicione o nome aqui
+api_key.txt
